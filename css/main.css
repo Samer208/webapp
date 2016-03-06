@@ -1,5 +1,41 @@
+body
+{
+background-image: url(../img/body-background.jpg);
+background-size: cover;
+background-repeat: none;	
+background-attachment: fixed; 
+margin: 0;
+padding: 0;
+}
+
 .layout-wrap
 {
-	max-width: 1200px;
-	min-width: 640px;
+	width: 950px;
+    margin: auto;
+    padding: 25px 10px 0 10px;
+}
+
+/* header properties */
+header
+{
+	background-color: black;
+	height: 75px;
+	width: 100%;
+	margin:0;
+}
+
+.search-box
+{
+	float: right;
+	margin-top: 5px;
+}
+/** page-body properties  **/
+.page-body
+{
+	background-color: rgba(119,123,121,0.5);
+}
+.notifications
+{
+	background-color: lightgray; 
+	height: 20px;
 }
