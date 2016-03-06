@@ -38,4 +38,85 @@ header
 {
 	background-color: lightgray; 
 	height: 20px;
+	margin-bottom: 15px;
+	margin-top: -10px;
+}
+/* navigation section  */
+.nav-section
+{
+	background-color: black;
+	float: left;
+	color:white;
+	font-size:1.2em;
+	width: 304px;
+	height :140px;
+	margin-right:2%;
+	text-align: center;
+}
+.reporting-platform
+{
+	background-image: url(../img/icons/action-report-new.png);
+	background-repeat: no-repeat;
+	background-position: center 80px;	
+}
+.Dashboard
+{
+	background-image: url(../img/icons/action-report-top.png);
+	background-repeat: no-repeat;
+	background-position: center 80px;	
+}
+.help-and-tutorials
+{
+	background-image: url(../img/icons/actions-help.png);
+	background-repeat: no-repeat;
+	background-position: center 80px;	
+	margin-right:0px;
+}
+/************/
+.menu
+{
+font-size: 0.9em;	
+}
+.menu-caption
+{
+	margin:0px;	
+	background-color: rgb(238,238,238);
+	text-align: left;
+	color: black;
+	padding:0px 3px 3px 13px;	
+	margin-top: 90px;
+}
+.action-list
+{
+	list-style: none;
+	text-align: left;
+	background-color: white;
+	padding-left: 15px;
+}
+.action-list-item
+{
+	border-bottom: solid 0.5px grey;
+}
+/** 	tabs	**/
+.tabs
+{
+	clear:both;
+	display: none;
+}
+
+/* general styles */
+.no-right-margin
+{
+	margin-right:0;
+}
+a{
+	text-decoration: none;
+	color: black;
+}
+ul{
+	margin:0px;
+	padding: 0px;
+}
+p{
+	margin-bottom: 0px;
 }
