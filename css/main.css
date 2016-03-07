@@ -4,6 +4,7 @@ background-image: url(../img/body-background.jpg);
 background-size: cover;
 background-repeat: none;	
 background-attachment: fixed; 
+font-family: sans-serif;
 margin: 0;
 padding: 0;
 }
@@ -75,27 +76,56 @@ header
 /************/
 .menu
 {
-font-size: 0.9em;	
-}
+	font-size: 0.9em;	
+}		
+
 .menu-caption
 {
 	margin:0px;	
 	background-color: rgb(238,238,238);
 	text-align: left;
-	color: black;
 	padding:0px 3px 3px 13px;	
 	margin-top: 90px;
+	color: rgb(63,63,63);
 }
+.menu-caption > p 
+{
+	padding:7px 0px 4px 0px;
+}
+.triangle-down
+{
+	float: right;
+	width:20px;
+	height: 20px;
+}
+
 .action-list
 {
 	list-style: none;
 	text-align: left;
 	background-color: white;
 	padding-left: 15px;
+	display:none;
+	/* action list becomes visable on mouse-over "nav-section"" div*/
 }
+.nav-section:hover .action-list
+{
+	display: block;
+}
+.nav-section:hover .triangle-down
+{
+	transform: rotate(180deg);
+	transition-duration:0.5s;
+}
+
 .action-list-item
 {
-	border-bottom: solid 0.5px grey;
+	padding: 5px 0px 5px 0px;
+	border-bottom: solid 1px lightgrey;
+}
+.action-list-item:last-child
+{
+	border-bottom:none;
 }
 /** 	tabs	**/
 .tabs
@@ -111,7 +141,7 @@ font-size: 0.9em;
 }
 a{
 	text-decoration: none;
-	color: black;
+	color: rgb(100,100,100);
 }
 ul{
 	margin:0px;
