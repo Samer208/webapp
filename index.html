@@ -79,10 +79,10 @@
 
 		<section class="tabs">
 			<ul>
-				<li><a href="#quick-reports">Quick Reports</a></li>
-				<li><a href="#my-folders">My Folders</a></li>
-				<li><a href="#my-team-folders">My Team Folders</a></li>
-				<li><a href="#public-folders">Public Folders</a></li>
+				<li class="tab-selector"><a href="#quick-reports">Quick Reports</a></li>
+				<li class="tab-selector"><a href="#my-folders">My Folders</a></li>
+				<li class="tab-selector"><a href="#my-team-folders">My Team Folders</a></li>
+				<li class="tab-selector no-right-margin"><a href="#public-folders">Public Folders</a></li>
 			</ul>
 
 			<div id="quick-reports">
@@ -96,6 +96,31 @@
 
 			<div id="public-folders">
 			</div>
+			
+			<form class="setting-form" method="get">
+			 	<div class="">
+					 <div class="setting-row">
+						 <span class="row-headedr"> <label class="report-label"> Report</label> 01</span>
+						 <span>Name</span> <input type="text" id="name1" class="input-name">
+						 <span> URL</span> <input type="url" id="url1" class="input-url">
+					 </div>
+					<div class="setting-row">
+						 <span class="row-headedr"><label class="report-label"> Report</label> 02</span>
+						 <span>Name</span> <input type="text" id="name2" class="input-name">
+						 <span> URL</span> <input type="url" id="ur2" class="input-url">
+					 </div>
+					<div class="setting-row">
+						 <span class="row-headedr"><label class="report-label"> Report</label> 03</span>
+						 <span>Name</span> <input type="text" id="name3" class="input-name">
+						 <span> URL</span> <input type="url" id="url3" class="input-url">
+					 </div>
+			 	</div>
+				 <button id="cancel">cancel</button>
+				 <button id="save"> save</button>
+			</form>
+		</section>
+		<section class="hosted-site">
+				<iframe class="iframe-window" src="http://www.w3schools.com"></iframe>
 		</section>
 	</section>
 
