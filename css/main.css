@@ -38,7 +38,7 @@ header
 .notifications
 {
 	background-color: lightgray; 
-	height: 20px;
+	padding: 2px;
 	margin-bottom: 15px;
 	margin-top: -10px;
 }
@@ -147,14 +147,83 @@ header
     width: 220px;
 	height:30px;
     padding: 10px 0px 0px 0px;
-    color: white;
     text-align: center;
 }
+.active-tab
+{
+	background-color: rgb(235,235,235);
+	float: left;
+    margin: 0px 20px 0px 3px;
+    width: 220px;
+	height:30px;
+    padding: 10px 0px 0px 0px;
+    text-align: center;
+}
+.tab-selector > a
+{
+	text-decoration:none;
+	color: white;
+}
+.active-tab > a
+{
+	text-decoration: none;
+	color:black;
+}
+/*** input table  **/
+.setting-form
+{
+	background-color: white;
+	width:916px;
+	margin-left: 17px;
+	padding: 10px;
+	box-shadow: 3px 3px 3px 0 grey;
+	position: absolute;
+	
+	display:none;
+ }
+ .setting-row
+ {
+	background-color: rgb(218,218,218);
+	color:black;
+	margin: 10px 0px 0px 10px;
+	font-size: small;
+	padding:2px;
+	clear:both;
+	
+ }
+ .row-header
+ {
+	 margin-left:5px;
+	 margin-right:20px;
+	 padding:5px;
+ }
+ .input-name
+ {
+	 margin-right:20px;
+	 width:345px;
+	 height:20px;
+	 border: none;
+ }
+ .input-url
+ {
+	 margin-right:30px;
+	 width:365px;
+	 height:20px;
+	 border: none;
+	 margin-right:5px;
+ }
+ .setting-form-bottons
+ {
+	 margin-top:20px;
+	 border: width border-style color;
+	 text-align: right;
+ }
 /** hosted  site**/
 .hosted-site
 {
 	background:rgb(235,235,235);
 	padding:15px;
+	margin-top: 240px;
 }
 	.iframe-window
 	{
@@ -167,9 +236,7 @@ header
 {
 	margin-right:0;
 }
-a{
-	text-decoration: none;
-}
+
 ul{
 	margin:0px;
 	padding: 0px;
