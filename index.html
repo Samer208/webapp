@@ -86,17 +86,28 @@
 			</ul>
 
 			<div id="quick-reports">
+				<ul></ul>
 			</div>
 
 			<div id="my-folders">
+				<ul> </ul>
 			</div>
 
 			<div id="my-team-folders">
+			<ul></ul>
 			</div>
 
 			<div id="public-folders">
 			</div>
 			
+			<!-- a list that will show the links  for the current tab -->
+			<div class="form-header">
+				<div id="settings-icon"> <img src="img/icons/settings.png" alt="settings icon"/> </div>
+				<div id="expand-icon"> <img src="img/icons/expand.png" alt="expand icon" /> </div>
+			<div class="current-link">Comverse</div>
+				<ul class="active-list"><li> things</li></ul>
+				
+			</div>
 			<form class="setting-form" method="get">
 			 	<div class="input-table">
 					 <div class="setting-row">
@@ -107,7 +118,7 @@
 					<div class="setting-row">
 						 <span class="row-header"><label class="report-label"> Report</label> 02</span>
 						 <span>Name</span> <input type="text" id="name2" class="input-name">
-						 <span> URL</span> <input type="url" id="ur2" class="input-url">
+						 <span> URL</span> <input type="url" id="url2" class="input-url">
 					 </div>
 					<div class="setting-row">
 						 <span class="row-header"><label class="report-label"> Report</label> 03</span>
@@ -116,10 +127,11 @@
 					 </div>
 			 	</div>
 				<div class="setting-form-bottons">
-						 <button id="cancel">cancel</button>
-						 <button id="save"> save</button>
+						 <button id="cancel-botton">cancel</button>
+						 <button id="save-botton"> save</button>
 				</div>
 			</form>
+			
 		</section>
 		<section class="hosted-site">
 				<iframe id="iframe-w" class="iframe-window" src="http://www.w3schools.com"></iframe>

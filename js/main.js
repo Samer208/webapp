@@ -50,13 +50,71 @@ function activateTab(selectedTab)
 function SetNotification () {
 	var notifactions =	document.querySelector(".notifications");
 	notifactions.innerHTML = "Testing - the  functions works";
-}								
+
+}
+function Cancelbutton()
+{
+	for(var i=1;i<=3;i++)
+	{
+		document.getElementById("name"+i).value="";
+		document.getElementById("url"+i).value="";
+	}
+}	
+
+function saveData()
+{
+		for(var i=1;i<=3;i++)
+	{
+		var name = document.getElementById("name"+i);
+		var url  = document.getElementById("url"+i)
+		
+		if(name.value !="")
+		{
+			if(url.value == "")
+			{
+				url.style.border= "1px solid red";
+			}
+			else
+			{ 	/* add the name and url to the apropriate ul (list) */
+				var activeTab = document.querySelector(".active-tab .tab-link").hash; // gets the name of the active tab , by accesseing the hash of the first link in it 
+				var list = document.queryselector(activeTab + " ul") ;
+				var listItem = document.createElement("li");
+				listItem.value= "name";
+				
+			}
+		}
+		else
+		{
+			if(url.value != "")
+			{
+				name.style.border= "1px solid red";
+			}
+		}
+	}
+}							
 function initiailize ()
 {
 	SetNotification();
 	setTabs();
 	/* activate the first tab */
 	activateTab("");
+	/* add event listener for setting icon */
+	document.getElementById("settings-icon").addEventListener("click",function(e){
+		var settingsForm = document.querySelector(".setting-form");
+		if(settingsForm.style.display == "block")
+		{
+			settingsForm.style.display = "none";
+			document.getElementById("settings-icon").style.backgroundColor ="transparent";
+		}
+		else
+		{
+			settingsForm.style.display = "block"
+			document.getElementById("settings-icon").style.backgroundColor ="white";
+		}
+	});
+	
+	document.getElementById("cancel-botton").addEventListener("click",function(e){ Cancelbutton(); });
+	
 	setiframelink("a");//_"https://www.youtube.com/");
 }
 window.onLoad = initiailize();

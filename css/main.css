@@ -112,6 +112,9 @@ header
 	background-color: white;
 	padding-left: 15px;
 	display:none;
+	position: absolute;
+	width:289px;
+	box-shadow: 3px 3px 3px 0 grey;
 	/* action list becomes visable on mouse-over "nav-section"" div*/
 }
 .nav-section:hover
@@ -120,7 +123,7 @@ header
 }
 .nav-section:hover .action-list
 {
-	display: none;
+	display: block;
 }
 .nav-section:hover .menu-caption::after
 {
@@ -175,7 +178,81 @@ header
 	text-decoration: none;
 	color:black;
 }
+/*		expand and setting icons and active links list*/0
+.form-header
+{
+	background-color:rgb(235,235,235);
+	margin-top:30px;
+	clear:both;
+	border: 1px solid red;
+	background-color: transparent
+}
+#settings-icon
+{
+	float: right;
+	padding:3px;
+	background-color: n
+}
+#expand-icon
+{
+	float: right;
+	margin:3px 10px 0px 0px;
+}
+.form-header
+{
+	background-color: rgb(235,235,235);
+	clear: both;
+    margin-left: 4px;
+    padding: 10px 14px 0px 14px;
+}
+
+.current-link
+{
+	background-color: white;
+	width:200px;
+	border:none;
+	color: grey;
+	padding:5px;
+	
+}
+.current-link::after
+{
+	content: "";
+	float: right;
+    width: 0px;
+    height: 0px;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid black;
+	margin-top:5px;
+	
+}
+.active-list
+{
+	background-color: white;
+	width:210px;
+	border:none;
+	color: grey;
+	position: absolute;
+	display: none;
+}
+.active-list > li
+{
+	padding:5px;
+	border-bottom:1px solid lightgray;
+
+}
+.active-list >li:hover
+{
+	background-color: lightgrey;
+}
+.active-list > li:last-child
+{
+	border-bottom: none;
+}
+
 /*** input table  **/
+
 .setting-form
 {
 	background-color: white;
@@ -184,7 +261,6 @@ header
 	padding: 10px;
 	box-shadow: 3px 3px 3px 0 grey;
 	position: absolute;
-	
 	display:none;
  }
  .setting-row
@@ -224,12 +300,27 @@ header
 	 border: width border-style color;
 	 text-align: right;
  }
+ #cancel-botton
+ {
+	 background-color: transparent;
+	 border: none;
+	 height:25px;
+	 width:70px;
+}
+ #save-botton
+ {
+	 background-color: black;
+	 color: white;
+	 border:none;
+	 height:25px;
+	 width:70px;
+	 text-align: center;
+ }
 /** hosted  site**/
 .hosted-site
 {
 	background:rgb(235,235,235);
 	padding:15px;
-	margin-top: 240px;
 }
 	.iframe-window
 	{
