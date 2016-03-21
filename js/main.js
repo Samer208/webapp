@@ -47,10 +47,29 @@ function activateTab(selectedTab)
 		tabLinks[i-1].parentNode.className += " no-right-margin";
 	}
 }
-function SetNotification () {
+function setNotification (note) {
 	var notifactions =	document.querySelector(".notifications");
-	notifactions.innerHTML = "Testing - the  functions works";
+	notifactions.innerHTML = note;// "Testing - the  functions works";
 
+}
+function requestData()
+{
+	setNotification("here30");
+	var data;
+	var xmlhttp = new XMLHttpRequest();
+	var url = "./data/config.json";
+	xmlhttp.onreadystatechange = function() {
+		setNotification("ashasdhasdhj");
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+		 {
+			setNotification("here12");
+			data = JSON.parse(xmlhttp.responseText);
+			setNotification(data.notification);
+			setNotification("here1");
+		}
+	};
+	xmlhttp.open("GET","./data/config.json", true);
+	xmlhttp.send();
 }
 function Cancelbutton()
 {
@@ -94,7 +113,7 @@ function saveData()
 }							
 function initiailize ()
 {
-	SetNotification();
+	requestData();
 	setTabs();
 	/* activate the first tab */
 	activateTab("");
