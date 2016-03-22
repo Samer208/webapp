@@ -19,7 +19,7 @@ function setNotification (note) {
 function setiframelink(link)
 {
 	var iframe = document.querySelector(".iframe-window");
-	iframe.src="https://www.google.com";
+	iframe.src=link;
 	setExpandLink(iframe.src);
 }
 function setExpandLink(link)
