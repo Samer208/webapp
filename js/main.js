@@ -79,13 +79,17 @@ function requestData()
 	/** herer , yet to finish the if thing */
 	if(data ==  null)
 	{
+		setNotification("i am here with the data 2 ");
 		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.onreadystatechange = function() {
 			if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
 			{
+				setNotification("i am here with the data1 ");
 				data = JSON.parse(xmlhttp.responseText);
 				localStorage.setItem("webappData", JSON.stringify(data));
+					setNotification("i am here with the data ");
 				setNotification(data.notification);
+				setNotification("i am here with the data ");
 			}
 		};
 		xmlhttp.open("GET","./data/config.json", true);
@@ -102,7 +106,7 @@ function Cancelbutton()
 }
 function saveData()
 {
-	var rows = document.querySelectorAll("setting-row");
+	var rows = document.querySelectorAll(".row-header");
 	var names = [] , links = []; 
 	for(var i=1;i<=rows.length;i++)
 	{
@@ -110,6 +114,7 @@ function saveData()
 		var url  = document.getElementById("url"+i)
 		if(name.value !="" && url.value !="")
 		{
+					setNotification("i am here " + i);
 				names[i] = name.value;
 				links[i] = url.value;
 		}
@@ -132,13 +137,19 @@ function saveData()
 		}	
 	}
 	/* store the adata in the local storage and in the apropriate tab list  */
-	if (links!= []) 
-	{	
-		var activeTab = document.querySelector(".active-tab .tab-link").hash;
+	if (links.length!= 0) 
+{	
+	
+		var activeTab = document.querySelector(".active-tab .tab-link").hash;	
 		var data = localStorage.getItem("webappData");
 		data = JSON.parse(data);
+				if(data == null)
+				{
+							setNotification("the data is null");
+				}
 		for (var i=0;i<data.tabsList.length;i++)
 		{
+			setNotification("i am here " + i);
 			if(data.tabsList[i].options.rowLabel == activeTab)
 			{
 				for(var j=0; j<names.length;j++)
@@ -155,6 +166,7 @@ function saveData()
 		//close the form
 		document.querySelector(".setting-form").style.display = "none";
 	}
+
 }
 function setLinksList()
 {
@@ -200,6 +212,6 @@ function initiailize ()
 	});
 	
 	document.getElementById("cancel-botton").addEventListener("click",function(e){ Cancelbutton(); });
-	document.getElementById("save-button").addEventListener("click",function(e){ saveData();});
+	document.getElementById("save-botton").addEventListener("click",function(e){ saveData();});
 }
 window.onLoad = initiailize();

@@ -160,7 +160,8 @@ header
 }
 .links-list
 {
-	visibility: hidden;
+	background-color: red;
+	/*visibility: hidden;*/
 }
 .active-tab
 {
