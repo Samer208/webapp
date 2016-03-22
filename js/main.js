@@ -1,13 +1,33 @@
+/*
+ *	functions list :
+ *		setNotification (note)		done
+ * 		setiframelink(link)
+ * 		setTabs() not done
+ * 		activateTab(selectedTab)()
+ * 		requestData()
+ * 		Cancelbutton()
+ * 		saveData()
+ * 		setLinksList()
+ * 		initiailize()
+ * 
+ */
+function setNotification (note) {
+	var notifactions =	document.querySelector(".notifications");
+	notifactions.innerHTML = note;// "Testing - the  functions works";
 
+}
 function setiframelink(link)
 {
-
-	/*select the ifram by id */
-	var iframe=document.querySelector(".iframe-window"),url;
-	url="https://www.youtube.com/";	
-	iframe.src = url.toString();
-		
+	var iframe = document.querySelector(".iframe-window");
+	iframe.src="https://www.google.com";
+	setExpandLink(iframe.src);
 }
+function setExpandLink(link)
+{
+	
+	document.getElementById("expand-icon").href=link;
+}
+
 function setTabs()
 {
 	/**sets an event listening for each tab */
@@ -45,27 +65,32 @@ function activateTab(selectedTab)
 			}
 		}
 		tabLinks[i-1].parentNode.className += " no-right-margin";
+		setNotification(selectedTab);
+		if(selectedTab == "#my-folders")
+		{
+					setNotification("www.paulirish.com");
+					setiframelink("https://www.google.com/");	
+		}
 	}
-}
-function setNotification (note) {
-	var notifactions =	document.querySelector(".notifications");
-	notifactions.innerHTML = note;// "Testing - the  functions works";
-
 }
 function requestData()
 {
-	var data;
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.onreadystatechange = function() {
-		if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-		 {
-			data = JSON.parse(xmlhttp.responseText);
-			setNotification(data.notification);
-			
-		}
-	};
-	xmlhttp.open("GET","./data/config.json", true);
-	xmlhttp.send();
+	var data =localStorage.getItem("webappData");
+	/** herer , yet to finish the if thing */
+	if(data ==  null)
+	{
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+			{
+				data = JSON.parse(xmlhttp.responseText);
+				localStorage.setItem("webappData", JSON.stringify(data));
+				setNotification(data.notification);
+			}
+		};
+		xmlhttp.open("GET","./data/config.json", true);
+		xmlhttp.send();
+	}
 }
 function Cancelbutton()
 {
@@ -74,38 +99,84 @@ function Cancelbutton()
 		document.getElementById("name"+i).value="";
 		document.getElementById("url"+i).value="";
 	}
-}	
-
+}
 function saveData()
 {
-		for(var i=1;i<=3;i++)
+	var rows = document.querySelectorAll("setting-row");
+	var names = [] , links = []; 
+	for(var i=1;i<=rows.length;i++)
 	{
 		var name = document.getElementById("name"+i);
 		var url  = document.getElementById("url"+i)
-		
-		if(name.value !="")
+		if(name.value !="" && url.value !="")
 		{
-			if(url.value == "")
-			{
-				url.style.border= "1px solid red";
-			}
-			else
-			{ 	/* add the name and url to the apropriate ul (list) */
-				var activeTab = document.querySelector(".active-tab .tab-link").hash; // gets the name of the active tab , by accesseing the hash of the first link in it 
-				var list = document.queryselector(activeTab + " ul") ;
-				var listItem = document.createElement("li");
-				listItem.value= "name";
-				
-			}
+				names[i] = name.value;
+				links[i] = url.value;
 		}
 		else
 		{
-			if(url.value != "")
+			if(name.value =="")
 			{
-				name.style.border= "1px solid red";
+				if(url.value != "")
+				{
+					name.style.border= "1px solid red";
+				}
+			}
+			else
+			{
+				if(url.value =="")
+				{
+					url.style.border= "1px solid red";
+				}
+			}
+		}	
+	}
+	/* store the adata in the local storage and in the apropriate tab list  */
+	if (links!= []) 
+	{	
+		var activeTab = document.querySelector(".active-tab .tab-link").hash;
+		var data = localStorage.getItem("webappData");
+		data = JSON.parse(data);
+		for (var i=0;i<data.tabsList.length;i++)
+		{
+			if(data.tabsList[i].options.rowLabel == activeTab)
+			{
+				for(var j=0; j<names.length;j++)
+				{
+					//add to the tab links list
+					document.querySelector(activeTab +" .links-list").innerHTML += "<li> <a href=\"" +links[j]+ "\">"+names[j]+ "</a></li>"; 
+					// add to local storage 
+					data.tabsList[i].options.links.push(names[j],links[j]);
+				}
 			}
 		}
+		localStorage.setItem("webappData", JSON.stringify(data));
+		setLinksList();  // update the link list 
+		//close the form
+		document.querySelector(".setting-form").style.display = "none";
 	}
+}
+function setLinksList()
+{
+	var activeTab = document.querySelector(".active-tab .tab-link").hash;
+	var linkslist = document.querySelector(activeTab + ".links-list"); //gets the hiddedn "ul" of the active tab
+	document.querySelector(".active-list").innerHTML=linkslist.innerHTML; // set the active list to hold all the tab links
+	document.querySelector(".current-link").innerHTML = linkslist.firstChild.innerHTML; //set current-link to be the active list first child
+	/*set event listener for the active list links  */
+	var links = document.querySelector(".active-list").childNodes;
+	for (var i=0 ; i< links.length;i++)
+	{
+		links[i].addEventListener("click",function(e){
+			document.querySelector(".current-link").innerHTML = this.innerHTML;
+			// update the ifram link
+			var link = document.querySelector(".current-link a").href;
+			setiframelink(link);		
+		});
+	}
+	if (activeTab == "#my-folders" || activeTab == "#public-folders") 
+	{
+		document.querySelector(".active-list").innerHTML = "";
+	};
 }							
 function initiailize ()
 {
@@ -123,13 +194,12 @@ function initiailize ()
 		}
 		else
 		{
-			settingsForm.style.display = "block"
+			settingsForm.style.display = "block";
 			document.getElementById("settings-icon").style.backgroundColor ="white";
 		}
 	});
 	
 	document.getElementById("cancel-botton").addEventListener("click",function(e){ Cancelbutton(); });
-	
-	setiframelink("a");//_"https://www.youtube.com/");
+	document.getElementById("save-button").addEventListener("click",function(e){ saveData();});
 }
 window.onLoad = initiailize();

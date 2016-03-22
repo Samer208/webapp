@@ -57,19 +57,40 @@
 	"tabsList": [
 		{
 			"options": {
-				"rowLabel": "Report"
+				"rowLabel": "#quick-reports",
+				"links":
+				[	
+					{
+						
+						"name" :"google",
+						"url": "https://www.google.com"
+					}
+				]	
 			}
 		}, {
 			"options": {
-				"url": "http://www.paulirish.com/"
+				"rowLabel": "#my-folders",
+				"links" :
+				[	{
+						"name": "PaulIrish",
+						"url": "http://www.paulirish.com/"
+					}
+				]
 			}
 		}, {
 			"options": {
-				"rowLabel": "Folder"
+				"rowLabel": "#my-team-folders",
+				"links":[]
 			}
 		}, {
 			"options": {
-				"url": "http://addyosmani.com/"
+				"rowLabel": "#public-folders",
+				"links" :
+				[	{
+						"name": "addyosami",
+						"url": "http://addyosmani.com/"
+					}
+				]
 			}
 		}
 	]

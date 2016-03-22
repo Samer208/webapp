@@ -158,6 +158,10 @@ header
     padding: 10px 0px 0px 0px;
     text-align: center;
 }
+.links-list
+{
+	visibility: hidden;
+}
 .active-tab
 {
 	background-color: rgb(235,235,235);
