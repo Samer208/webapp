@@ -78,9 +78,8 @@ function requestData()
 
 	var data =localStorage.getItem("webappData");
 	/** herer , yet to finish the if thing */
+	
 		setNotification("i am here with the data 1 ");
-	if(data ==  null)
-	{
 		setNotification("i am here with the data 2 ");
 		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.onreadystatechange = function() {
@@ -97,8 +96,8 @@ function requestData()
 		};
 		xmlhttp.open("GET","./data/config.json", true);
 		xmlhttp.send();
-	}
-			setNotification("i am here with the data out ");
+	
+		setNotification("i am here with the data out ");
 }
 function Cancelbutton()
 {
