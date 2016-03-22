@@ -66,12 +66,11 @@ function activateTab(selectedTab)
 		}
 		tabLinks[i-1].parentNode.className += " no-right-margin";
 		setNotification(selectedTab);
-		if(selectedTab == "#my-folders")
-		{
-					setNotification("www.paulirish.com");
-					setiframelink("https://www.google.com/");	
-		}
 	}
+	// update the active link list
+	setLinksList();
+	setNotification("batman ");
+	setiframelink(document.querySelector(selectedTab + " .links-list > li > a").href);
 }
 function requestData()
 {
@@ -88,6 +87,7 @@ function requestData()
 					data = JSON.parse(xmlhttp.responseText);
 					localStorage.setItem("webappData", JSON.stringify(data));
 					setNotification(data.notification);
+					initializeLinks();
 				}
 			};
 			xmlhttp.open("GET","./data/config.json", true);
@@ -97,7 +97,8 @@ function requestData()
 		 {
 			data = JSON.parse(data);
 			//set notification
-			setNotification(data.notification);	
+			setNotification(data.notification);
+			initializeLinks();	
 		}
 }
 function Cancelbutton()
@@ -111,15 +112,19 @@ function Cancelbutton()
 function saveData()
 {
 	var rows = document.querySelectorAll(".row-header");
-	var names = [] , links = []; 
+	var links = []; 
+	var count=0;
 	for(var i=1;i<=rows.length;i++)
 	{
 		var name = document.getElementById("name"+i);
 		var url  = document.getElementById("url"+i)
 		if(name.value !="" && url.value !="")
 		{
-				names[i] = name.value;
-				links[i] = url.value;
+			links[count] = {
+				name: name.value,
+				url: url.value
+			};
+			count++;
 		}
 		else
 		{
@@ -140,45 +145,56 @@ function saveData()
 		}	
 	}
 	/* store the adata in the local storage and in the apropriate tab list  */
-	if (links.length!= 0) 
-{	
-	
-		var activeTab = document.querySelector(".active-tab .tab-link").hash;	
-		var data = localStorage.getItem("webappData");
-		data = JSON.parse(data);
-				if(data == null)
-				{
-							setNotification("the data is null");
-				}
-		for (var i=0;i<data.tabsList.length;i++)
-		{
-			setNotification("i am here " + i);
-			if(data.tabsList[i].options.rowLabel == activeTab)
+
+	var activeTab = document.querySelector(".active-tab .tab-link").hash;	
+	var data = localStorage.getItem("webappData");
+	data = JSON.parse(data);
+	for (var i=0;i<data.tabsList.length;i++)
+	{
+		if(data.tabsList[i].options.rowLabel == activeTab)
+		{ 
+			for(var j=0; j< links.length;j++)
 			{
-				for(var j=0; j<names.length;j++)
-				{
-					//add to the tab links list
-					document.querySelector(activeTab +" .links-list").innerHTML += "<li> <a href=\"" +links[j]+ "\">"+names[j]+ "</a></li>"; 
-					// add to local storage 
-					data.tabsList[i].options.links.push(names[j],links[j]);
-				}
+				//add to the tab links list
+				document.querySelector(activeTab +" .links-list").innerHTML += "<li><a href=\"" +links[j].url+ "\">"+links[j].name+ "</a></li>"; 
+				// add to local storage 
+				data.tabsList[i].options.links.push(links[j]);
+				setNotification("pushed this link to the local storage :<br> " +links[j].name + "  " +links[i].url);
 			}
 		}
-		localStorage.setItem("webappData", JSON.stringify(data));
-		setLinksList();  // update the link list 
-		//close the form
-		document.querySelector(".setting-form").style.display = "none";
 	}
-
+	localStorage.setItem("webappData", JSON.stringify(data));
+	setLinksList();  // update the link list 
+	//close the form
+	document.querySelector(".setting-form").style.display = "none";
+	
+}
+function initializeLinks()
+{	//add the existing links in the local storage into each tab liks list
+	var data = localStorage.getItem("webappData");
+	data = JSON.parse(data);
+	var tabsList=data.tabsList;
+	var tab;
+	var links=[];
+	for(var i=0 ; i < tabsList.length;i++)
+	{	// get the name of the tab (with the hash)
+		tab=tabsList[i].options.rowLabel; 
+		links=tabsList[i].options.links;
+		for(var j=0; j < links.length; j++)
+		{	document.querySelector(tab +" .links-list").innerHTML += "<li><a href=\"" +links[j].url+ "\">"+links[j].name+ "</a></li>"; 
+		}
+	}
 }
 function setLinksList()
 {
+	setNotification("entered set links list");
 	var activeTab = document.querySelector(".active-tab .tab-link").hash;
-	var linkslist = document.querySelector(activeTab + ".links-list"); //gets the hiddedn "ul" of the active tab
+	var linkslist = document.querySelector(activeTab + " .links-list"); //gets the hiddedn "ul" of the active ta
+	setNotification(linkslist.innerHTML);
 	document.querySelector(".active-list").innerHTML=linkslist.innerHTML; // set the active list to hold all the tab links
 	document.querySelector(".current-link").innerHTML = linkslist.firstChild.innerHTML; //set current-link to be the active list first child
 	/*set event listener for the active list links  */
-	var links = document.querySelector(".active-list").childNodes;
+	var links = document.querySelectorAll(".active-list > li");
 	for (var i=0 ; i< links.length;i++)
 	{
 		links[i].addEventListener("click",function(e){
@@ -190,8 +206,12 @@ function setLinksList()
 	}
 	if (activeTab == "#my-folders" || activeTab == "#public-folders") 
 	{
-		document.querySelector(".active-list").innerHTML = "";
+	// here batman
+	var c =5;
+	//	document.querySelector(".active-list").innerHTML = "";
+	
 	};
+	
 }							
 function initiailize ()
 {
@@ -216,5 +236,18 @@ function initiailize ()
 	
 	document.getElementById("cancel-botton").addEventListener("click",function(e){ Cancelbutton(); });
 	document.getElementById("save-botton").addEventListener("click",function(e){ saveData();});
+	document.querySelector(".current-link").addEventListener("click",function(e)
+	{
+		//show the other links
+		var list =document.querySelector(".active-list");
+		if(list.style.display == "block")
+		{
+			list.style.display="none";
+		}
+		else
+		{
+			list.style.display="block";
+		}
+	});
 }
 window.onLoad = initiailize();

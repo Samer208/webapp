@@ -160,8 +160,7 @@ header
 }
 .links-list
 {
-	background-color: red;
-	/*visibility: hidden;*/
+	display: none;
 }
 .active-tab
 {
@@ -232,6 +231,7 @@ header
 	margin-top:5px;
 	
 }
+
 .active-list
 {
 	background-color: white;
@@ -294,7 +294,7 @@ header
  .input-url
  {
 	 margin-right:30px;
-	 width:365px;
+	 width:350px;
 	 height:20px;
 	 border: none;
 	 margin-right:5px;
