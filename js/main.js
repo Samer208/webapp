@@ -75,26 +75,30 @@ function activateTab(selectedTab)
 }
 function requestData()
 {
+
 	var data =localStorage.getItem("webappData");
 	/** herer , yet to finish the if thing */
+		setNotification("i am here with the data 1 ");
 	if(data ==  null)
 	{
 		setNotification("i am here with the data 2 ");
 		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.onreadystatechange = function() {
+					setNotification("i am here with the data 3 ");
 			if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
 			{
-				setNotification("i am here with the data1 ");
+				setNotification("i am here with the data4 ");
 				data = JSON.parse(xmlhttp.responseText);
 				localStorage.setItem("webappData", JSON.stringify(data));
-					setNotification("i am here with the data ");
+					setNotification("i am here with the data5 ");
 				setNotification(data.notification);
-				setNotification("i am here with the data ");
+				setNotification("i am here with the data 6");
 			}
 		};
 		xmlhttp.open("GET","./data/config.json", true);
 		xmlhttp.send();
 	}
+			setNotification("i am here with the data out ");
 }
 function Cancelbutton()
 {
@@ -114,7 +118,6 @@ function saveData()
 		var url  = document.getElementById("url"+i)
 		if(name.value !="" && url.value !="")
 		{
-					setNotification("i am here " + i);
 				names[i] = name.value;
 				links[i] = url.value;
 		}
