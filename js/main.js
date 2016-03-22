@@ -13,7 +13,7 @@
  */
 function setNotification (note) {
 	var notifactions =	document.querySelector(".notifications");
-	notifactions.innerHTML = note;// "Testing - the  functions works";
+	notifactions.innerHTML += note +" <br> ";// "Testing - the  functions works";
 
 }
 function setiframelink(link)
