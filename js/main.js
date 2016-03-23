@@ -72,11 +72,8 @@ function activateTab(selectedTab)
 	// check if the list is empty
 	if (url != null)
 	{
-		setNotification("barman 3");
-		setNotification(url);
 		setiframelink(document.querySelector(selectedTab + " .links-list > li > a").href);
 	}
-		setNotification("batman 12");
 	/* hide or show the setting icon and active links*/
 	if(selectedTab == "#my-folders" || selectedTab == "#public-folders")
 	{
@@ -107,7 +104,6 @@ function activateTab(selectedTab)
 			}
 		}
 	}
-	setNotification("out of activate tab");
 }
 function requestData()
 {
@@ -150,6 +146,7 @@ function saveData()
 	var rows = document.querySelectorAll(".row-header");
 	var links = []; 
 	var count=0;
+	var bool = 0;// if there is a missing data , bool=1
 	for(var i=1;i<=rows.length;i++)
 	{
 		var name = document.getElementById("name"+i);
@@ -168,42 +165,45 @@ function saveData()
 			{
 				if(url.value != "")
 				{
-					name.style.border= "1px solid red";
+					bool=1;
 				}
 			}
 			else
 			{
 				if(url.value =="")
 				{
-					url.style.border= "1px solid red";
+					bool=1;
 				}
 			}
 		}	
 	}
 	/* store the adata in the local storage and in the apropriate tab list  */
-	var activeTab = document.querySelector(".active-tab .tab-link").hash;	
-	var data = localStorage.getItem("webappData");
-	data = JSON.parse(data);
-	for (var i=0;i<data.tabsList.length;i++)
+	if(links.length>0 || bool!=1)
 	{
-		if(data.tabsList[i].options.rowLabel == activeTab)
-		{ 
-			for(var j=0; j < links.length;j++)
-			{
-				//add to the tab links list
-				document.querySelector(activeTab +" .links-list").innerHTML += "<li><a href=\"" +links[j].url+ "\">"+links[j].name+ "</a></li>"; 
-				// add to local storage 
-				data.tabsList[i].options.links.push(links[j]);
-				setNotification("pushed this link to the local storage :<br> " +links[j].name + "  " +links[j].url);
-				
+		var activeTab = document.querySelector(".active-tab .tab-link").hash;	
+		var data = localStorage.getItem("webappData");
+		data = JSON.parse(data);
+		for (var i=0;i<data.tabsList.length;i++)
+		{
+			if(data.tabsList[i].options.rowLabel == activeTab)
+			{ 
+				for(var j=0; j < links.length;j++)
+				{
+					//add to the tab links list
+					document.querySelector(activeTab +" .links-list").innerHTML += "<li><a href=\"" +links[j].url+ "\">"+links[j].name+ "</a></li>"; 
+					// add to local storage 
+					data.tabsList[i].options.links.push(links[j]);
+					setNotification("pushed this link to the local storage :<br> " +links[j].name + "  " +links[j].url);
+				}
 			}
 		}
+		localStorage.setItem("webappData", JSON.stringify(data));
+		setLinksList();  // update the link list 
+		//clear the form 
+		Cancelbutton();
+		//close the form
+		document.querySelector(".setting-form").style.display = "none";
 	}
-	localStorage.setItem("webappData", JSON.stringify(data));
-	setLinksList();  // update the link list 
-	//close the form
-	document.querySelector(".setting-form").style.display = "none";
-	
 }
 function initializeLinks()
 {	//add the existing links in the local storage into each tab liks list
@@ -224,7 +224,6 @@ function initializeLinks()
 }
 function setLinksList()
 {
-	setNotification("entered set linkslist");
 	var activeTab = document.querySelector(".active-tab .tab-link").hash;
 	var linkslist = document.querySelector(activeTab + " .links-list"); //gets the hiddedn "ul" of the active tab
 	document.querySelector(".active-list").innerHTML=linkslist.innerHTML; // set the active list to hold all the tab links
@@ -244,14 +243,6 @@ function setLinksList()
 		document.querySelector(".current-link").innerHTML = document.querySelector(".active-list > li > a").innerHTML ;//linkslist.firstChild.value; //set current-link to be the active list first child
 	}
 
-	if (activeTab == "#my-folders" || activeTab == "#public-folders") 
-	{
-	// here batman
-		setNotification("fix this");
-	//	document.querySelector(".active-list").innerHTML = "";
-	
-	}
-		setNotification(" out set linkslist");
 }							
 function initiailize ()
 {
@@ -261,7 +252,6 @@ function initiailize ()
 	activateTab("");
 	/* add event listener for setting icon */
 	document.getElementById("settings-icon").addEventListener("click",function(e){
-		setNotification("clicking this setting button");
 		var settingsForm = document.querySelector(".setting-form");
 		if(settingsForm.style.display == "block")
 		{
