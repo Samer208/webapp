@@ -255,7 +255,11 @@ header
 {
 	border-bottom: none;
 }
-
+.active-list  a
+{
+	text-decoration: none;
+	color: grey;
+}
 /*** input table  **/
 
 .setting-form
@@ -284,6 +288,7 @@ header
 	 margin-right:20px;
 	 padding:5px;
  }
+
  .input-name
  {
 	 margin-right:20px;

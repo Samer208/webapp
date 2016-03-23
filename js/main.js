@@ -65,19 +65,58 @@ function activateTab(selectedTab)
 			}
 		}
 		tabLinks[i-1].parentNode.className += " no-right-margin";
-		setNotification(selectedTab);
 	}
+	setNotification(selectedTab);
 	// update the active link list
+	setNotification("batman 1");
 	setLinksList();
-	setNotification("batman ");
-	setiframelink(document.querySelector(selectedTab + " .links-list > li > a").href);
+	setNotification("batman 2");
+	var url =document.querySelector(selectedTab + " .links-list > li > a");
+	// check if the list is empty
+	if (url != null)
+	{
+		setNotification("barman 3");
+		setNotification(url);
+		setiframelink(document.querySelector(selectedTab + " .links-list > li > a").href);
+	}
+		setNotification("batman 12");
+	/* hide or show the setting icon and active links*/
+	if(selectedTab == "#my-folders" || selectedTab == "#public-folders")
+	{
+		document.querySelector(".current-link").style.display="none";
+		document.getElementById("settings-icon").style.display="none";
+	}
+	else
+	{
+		document.querySelector(".current-link").style.display="block";
+		document.getElementById("settings-icon").style.display="block";
+		// hide and display the folder,report labels
+		var reportLabels = document.querySelectorAll(".report-label");
+		var folderLabels = document.querySelectorAll(".folder-label");
+		if(selectedTab == "#quick-reports")
+		{		
+			for(var k=0;k<reportLabels.length;k++)
+			{
+				reportLabels[k].style.display = "inline";
+				folderLabels[k].style.display= "none";
+			}
+		}
+		else
+		{
+			for(var k=0;k<reportLabels.length;k++)
+			{
+				reportLabels[k].style.display = "none";
+				folderLabels[k].style.display = "inline";
+			}
+		}
+	}
+	setNotification("out of activate tab");
 }
 function requestData()
 {
 
 	var data =localStorage.getItem("webappData");
-	/** herer , yet to finish the if thing */
-		setNotification("i am here with the data 1 ");
+	
 	if(data == null)
 		{
 			var xmlhttp = new XMLHttpRequest();
@@ -181,37 +220,38 @@ function initializeLinks()
 		tab=tabsList[i].options.rowLabel; 
 		links=tabsList[i].options.links;
 		for(var j=0; j < links.length; j++)
-		{	document.querySelector(tab +" .links-list").innerHTML += "<li><a href=\"" +links[j].url+ "\">"+links[j].name+ "</a></li>"; 
+		{	document.querySelector(tab +" .links-list").innerHTML += "<li><a   onclick='return false;' href=\"" +links[j].url+ "\">"+links[j].name+ "</a></li>"; 
 		}
 	}
 }
 function setLinksList()
 {
-	setNotification("entered set links list");
 	var activeTab = document.querySelector(".active-tab .tab-link").hash;
-	var linkslist = document.querySelector(activeTab + " .links-list"); //gets the hiddedn "ul" of the active ta
-	setNotification(linkslist.innerHTML);
+	var linkslist = document.querySelector(activeTab + " .links-list"); //gets the hiddedn "ul" of the active tab
 	document.querySelector(".active-list").innerHTML=linkslist.innerHTML; // set the active list to hold all the tab links
-	document.querySelector(".current-link").innerHTML = linkslist.firstChild.innerHTML; //set current-link to be the active list first child
 	/*set event listener for the active list links  */
 	var links = document.querySelectorAll(".active-list > li");
-	for (var i=0 ; i< links.length;i++)
+		for (var i=0 ; i< links.length;i++)
+		{
+			links[i].addEventListener("click",function(e){
+				document.querySelector(".current-link").innerHTML = this.firstChild.innerHTML;
+				// update the ifram link
+				var link = document.querySelector(".current-link").href;
+				setiframelink(this.firstChild.href);	
+			});
+		}
+	if(links.length > 0)
 	{
-		links[i].addEventListener("click",function(e){
-			document.querySelector(".current-link").innerHTML = this.innerHTML;
-			// update the ifram link
-			var link = document.querySelector(".current-link a").href;
-			setiframelink(link);		
-		});
+		document.querySelector(".current-link").innerHTML = document.querySelector(".active-list > li > a").innerHTML ;//linkslist.firstChild.value; //set current-link to be the active list first child
 	}
+
 	if (activeTab == "#my-folders" || activeTab == "#public-folders") 
 	{
 	// here batman
-	var c =5;
+		setNotification("fix this");
 	//	document.querySelector(".active-list").innerHTML = "";
 	
 	};
-	
 }							
 function initiailize ()
 {
@@ -221,6 +261,7 @@ function initiailize ()
 	activateTab("");
 	/* add event listener for setting icon */
 	document.getElementById("settings-icon").addEventListener("click",function(e){
+		setNotification("clicking this setting button");
 		var settingsForm = document.querySelector(".setting-form");
 		if(settingsForm.style.display == "block")
 		{
