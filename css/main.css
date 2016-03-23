@@ -45,7 +45,6 @@ header
 /* navigation section  */
 .nav-section
 {
-	background-color: black;
 	float: left;
 	color:white;
 	font-size:1.2em;
@@ -54,25 +53,7 @@ header
 	margin-right:2%;
 	text-align: center;
 }
-.reporting-platform
-{
-	background-image: url(../img/icons/action-report-new.png);
-	background-repeat: no-repeat;
-	background-position: center 80px;	
-}
-.Dashboard
-{
-	background-image: url(../img/icons/action-report-top.png);
-	background-repeat: no-repeat;
-	background-position: center 80px;	
-}
-.help-and-tutorials
-{
-	background-image: url(../img/icons/actions-help.png);
-	background-repeat: no-repeat;
-	background-position: center 80px;	
-	margin-right:0px;
-}
+
 /************/
 .menu
 {
@@ -81,7 +62,6 @@ header
 
 .menu-caption
 {
-	margin:0px;	
 	background-color: rgb(238,238,238);
 	text-align: left;
 	padding:0px 3px 3px 13px;	
@@ -91,7 +71,7 @@ header
 .menu-caption > p 
 {
 	padding:7px 0px 4px 0px;
-	margin:0;
+	margin-top:-30px;	
 }
 .menu-caption:after
 {

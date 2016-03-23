@@ -8,6 +8,7 @@
  * 		Cancelbutton()
  * 		saveData()
  * 		setLinksList()
+ * 		setQuickActions(quickaction)
  * 		initiailize()
  * 
  */
@@ -119,6 +120,7 @@ function requestData()
 					data = JSON.parse(xmlhttp.responseText);
 					localStorage.setItem("webappData", JSON.stringify(data));
 					setNotification(data.notification);
+					setQuickActions(data.quickActions);
 					initializeLinks();
 				}
 			};
@@ -130,6 +132,7 @@ function requestData()
 			data = JSON.parse(data);
 			//set notification
 			setNotification(data.notification);
+			setQuickActions(data.quickActions);
 			initializeLinks();	
 		}
 }
@@ -193,7 +196,6 @@ function saveData()
 					document.querySelector(activeTab +" .links-list").innerHTML += "<li><a href=\"" +links[j].url+ "\">"+links[j].name+ "</a></li>"; 
 					// add to local storage 
 					data.tabsList[i].options.links.push(links[j]);
-					setNotification("pushed this link to the local storage :<br> " +links[j].name + "  " +links[j].url);
 				}
 			}
 		}
@@ -234,8 +236,8 @@ function setLinksList()
 			links[i].addEventListener("click",function(e){
 				document.querySelector(".current-link").innerHTML = this.firstChild.innerHTML;
 				// update the ifram link
-				var link = document.querySelector(".current-link").href;
 				setiframelink(this.firstChild.href);	
+				document.querySelector(".active-list").style.display="none";
 			});
 		}
 	if(links.length > 0)
@@ -243,6 +245,33 @@ function setLinksList()
 		document.querySelector(".current-link").innerHTML = document.querySelector(".active-list > li > a").innerHTML ;//linkslist.firstChild.value; //set current-link to be the active list first child
 	}
 
+}
+function setQuickActions(quickActions)
+{
+	var navsections = document.querySelectorAll(".nav-section");
+	for(var i=0;i<quickActions.length;i++)
+	{
+		//setting the label 
+		navsections[i].innerHTML = "<p>"+ quickActions[i].label +"</p>" +navsections[i].innerHTML ;
+		//setting the background 
+		navsections[i].style.background="url(./img/icons/" + quickActions[i].icon + ".png) center 80px no-repeat black";
+	}
+	var menucaptions = document.querySelectorAll(".menu-caption");	
+	for(var i=0;i<menucaptions.length;i++)
+	{
+		menucaptions[i].innerHTML = "<p> "+ quickActions[i].actionsLabel +"</p>";	
+	}
+	
+	var actionsList = document.querySelectorAll(".action-list");
+	for(var i=0;i<actionsList.length;i++)
+	{
+		var actions = quickActions[i].actions;	
+		for(var j=0;j<actions.length;j++)
+		{	
+			actionsList[i].innerHTML += "<li class=\"action-list-item\"><a href=\"" + actions[j].url + "\">" + actions[j].label + "</a></li>";
+		}
+	}
+	/* note : somehow they dont like to be in 1 for , somehow they only work if they yare seperated . why??!!! why!!!!! */
 }							
 function initiailize ()
 {
