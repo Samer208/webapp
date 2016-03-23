@@ -66,11 +66,8 @@ function activateTab(selectedTab)
 		}
 		tabLinks[i-1].parentNode.className += " no-right-margin";
 	}
-	setNotification(selectedTab);
 	// update the active link list
-	setNotification("batman 1");
 	setLinksList();
-	setNotification("batman 2");
 	var url =document.querySelector(selectedTab + " .links-list > li > a");
 	// check if the list is empty
 	if (url != null)
@@ -184,7 +181,6 @@ function saveData()
 		}	
 	}
 	/* store the adata in the local storage and in the apropriate tab list  */
-
 	var activeTab = document.querySelector(".active-tab .tab-link").hash;	
 	var data = localStorage.getItem("webappData");
 	data = JSON.parse(data);
@@ -192,13 +188,14 @@ function saveData()
 	{
 		if(data.tabsList[i].options.rowLabel == activeTab)
 		{ 
-			for(var j=0; j< links.length;j++)
+			for(var j=0; j < links.length;j++)
 			{
 				//add to the tab links list
 				document.querySelector(activeTab +" .links-list").innerHTML += "<li><a href=\"" +links[j].url+ "\">"+links[j].name+ "</a></li>"; 
 				// add to local storage 
 				data.tabsList[i].options.links.push(links[j]);
-				setNotification("pushed this link to the local storage :<br> " +links[j].name + "  " +links[i].url);
+				setNotification("pushed this link to the local storage :<br> " +links[j].name + "  " +links[j].url);
+				
 			}
 		}
 	}
@@ -220,12 +217,14 @@ function initializeLinks()
 		tab=tabsList[i].options.rowLabel; 
 		links=tabsList[i].options.links;
 		for(var j=0; j < links.length; j++)
-		{	document.querySelector(tab +" .links-list").innerHTML += "<li><a   onclick='return false;' href=\"" +links[j].url+ "\">"+links[j].name+ "</a></li>"; 
+		{	
+			document.querySelector(tab +" .links-list").innerHTML += "<li><a   onclick='return false;' href=\"" +links[j].url+ "\">"+links[j].name+ "</a></li>"; 
 		}
 	}
 }
 function setLinksList()
 {
+	setNotification("entered set linkslist");
 	var activeTab = document.querySelector(".active-tab .tab-link").hash;
 	var linkslist = document.querySelector(activeTab + " .links-list"); //gets the hiddedn "ul" of the active tab
 	document.querySelector(".active-list").innerHTML=linkslist.innerHTML; // set the active list to hold all the tab links
@@ -251,7 +250,8 @@ function setLinksList()
 		setNotification("fix this");
 	//	document.querySelector(".active-list").innerHTML = "";
 	
-	};
+	}
+		setNotification(" out set linkslist");
 }							
 function initiailize ()
 {
@@ -276,7 +276,10 @@ function initiailize ()
 	});
 	
 	document.getElementById("cancel-botton").addEventListener("click",function(e){ Cancelbutton(); });
-	document.getElementById("save-botton").addEventListener("click",function(e){ saveData();});
+	document.getElementById("save-botton").addEventListener("click",function(e){
+		 saveData();
+		 document.querySelector(".setting-form").action = document.querySelector(".active-tab .tab-link").hash;
+	});
 	document.querySelector(".current-link").addEventListener("click",function(e)
 	{
 		//show the other links

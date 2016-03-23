@@ -80,7 +80,12 @@
 		}, {
 			"options": {
 				"rowLabel": "#my-team-folders",
-				"links":[]
+				"links":
+				[	{
+						"name": "ng-wild",
+						"url": "http://www.nationalgeographic.com/"
+					}
+				]
 			}
 		}, {
 			"options": {
