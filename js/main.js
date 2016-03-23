@@ -12,14 +12,21 @@
  * 		initiailize()
  * 
  */
+function $(selector) {
+    return document.querySelector(selector);
+}
+function all(selector) {
+    return document.querySelectorAll(selector);
+}
+
 function setNotification (note) {
-	var notifactions =	document.querySelector(".notifications");
+	var notifactions =	$(".notifications");
 	notifactions.innerHTML += note +" <br> ";// "Testing - the  functions works";
 
 }
 function setiframelink(link)
 {
-	var iframe = document.querySelector(".iframe-window");
+	var iframe = $(".iframe-window");
 	iframe.src=link;
 	setExpandLink(iframe.src);
 }
@@ -33,7 +40,7 @@ function setTabs()
 {
 	/**sets an event listening for each tab */
 	
-	var tabs = document.querySelectorAll(".tab-link");
+	var tabs = all(".tab-link");
 	/*	add event listening for each tab  */
 	for(var i=0; i<tabs.length; i++)
 	{
@@ -47,12 +54,12 @@ function activateTab(selectedTab)
 	if(selectedTab == "")
 	{
 		/* incase no tab has yet been chosen - activate the first tab */
-		document.querySelector(".tab-selector").className="active-tab";
+		$(".tab-selector").className="active-tab";
 	}	
 	else
 	{
 		/*select all thhe links (<a>) that are in the tabs */
-		var tabLinks=document.querySelectorAll(".tab-link");
+		var tabLinks=all(".tab-link");
 		for(var i=0;i<tabLinks.length;i++)
 		{
 			/*activate the tab that the Hash in its link equals to selectedTab */
@@ -69,25 +76,25 @@ function activateTab(selectedTab)
 	}
 	// update the active link list
 	setLinksList();
-	var url =document.querySelector(selectedTab + " .links-list > li > a");
+	var url =$(selectedTab + " .links-list > li > a");
 	// check if the list is empty
 	if (url != null)
 	{
-		setiframelink(document.querySelector(selectedTab + " .links-list > li > a").href);
+		setiframelink($(selectedTab + " .links-list > li > a").href);
 	}
 	/* hide or show the setting icon and active links*/
 	if(selectedTab == "#my-folders" || selectedTab == "#public-folders")
 	{
-		document.querySelector(".current-link").style.display="none";
+		$(".current-link").style.display="none";
 		document.getElementById("settings-icon").style.display="none";
 	}
 	else
 	{
-		document.querySelector(".current-link").style.display="block";
+		$(".current-link").style.display="block";
 		document.getElementById("settings-icon").style.display="block";
 		// hide and display the folder,report labels
-		var reportLabels = document.querySelectorAll(".report-label");
-		var folderLabels = document.querySelectorAll(".folder-label");
+		var reportLabels = all(".report-label");
+		var folderLabels = all(".folder-label");
 		if(selectedTab == "#quick-reports")
 		{		
 			for(var k=0;k<reportLabels.length;k++)
@@ -146,7 +153,7 @@ function Cancelbutton()
 }
 function saveData()
 {
-	var rows = document.querySelectorAll(".row-header");
+	var rows = all(".row-header");
 	var links = []; 
 	var count=0;
 	var bool = 0;// if there is a missing data , bool=1
@@ -183,7 +190,7 @@ function saveData()
 	/* store the adata in the local storage and in the apropriate tab list  */
 	if(links.length>0 || bool!=1)
 	{
-		var activeTab = document.querySelector(".active-tab .tab-link").hash;	
+		var activeTab = $(".active-tab .tab-link").hash;	
 		var data = localStorage.getItem("webappData");
 		data = JSON.parse(data);
 		for (var i=0;i<data.tabsList.length;i++)
@@ -193,7 +200,7 @@ function saveData()
 				for(var j=0; j < links.length;j++)
 				{
 					//add to the tab links list
-					document.querySelector(activeTab +" .links-list").innerHTML += "<li><a href=\"" +links[j].url+ "\">"+links[j].name+ "</a></li>"; 
+					$(activeTab +" .links-list").innerHTML += "<li><a href=\"" +links[j].url+ "\">"+links[j].name+ "</a></li>"; 
 					// add to local storage 
 					data.tabsList[i].options.links.push(links[j]);
 				}
@@ -204,7 +211,7 @@ function saveData()
 		//clear the form 
 		Cancelbutton();
 		//close the form
-		document.querySelector(".setting-form").style.display = "none";
+		$(".setting-form").style.display = "none";
 	}
 }
 function initializeLinks()
@@ -220,35 +227,35 @@ function initializeLinks()
 		links=tabsList[i].options.links;
 		for(var j=0; j < links.length; j++)
 		{	
-			document.querySelector(tab +" .links-list").innerHTML += "<li><a   onclick='return false;' href=\"" +links[j].url+ "\">"+links[j].name+ "</a></li>"; 
+			$(tab +" .links-list").innerHTML += "<li><a   onclick='return false;' href=\"" +links[j].url+ "\">"+links[j].name+ "</a></li>"; 
 		}
 	}
 }
 function setLinksList()
 {
-	var activeTab = document.querySelector(".active-tab .tab-link").hash;
-	var linkslist = document.querySelector(activeTab + " .links-list"); //gets the hiddedn "ul" of the active tab
-	document.querySelector(".active-list").innerHTML=linkslist.innerHTML; // set the active list to hold all the tab links
+	var activeTab = $(".active-tab .tab-link").hash;
+	var linkslist = $(activeTab + " .links-list"); //gets the hiddedn "ul" of the active tab
+	$(".active-list").innerHTML=linkslist.innerHTML; // set the active list to hold all the tab links
 	/*set event listener for the active list links  */
-	var links = document.querySelectorAll(".active-list > li");
+	var links = all(".active-list > li");
 		for (var i=0 ; i< links.length;i++)
 		{
 			links[i].addEventListener("click",function(e){
-				document.querySelector(".current-link").innerHTML = this.firstChild.innerHTML;
+				$(".current-link").innerHTML = this.firstChild.innerHTML;
 				// update the ifram link
 				setiframelink(this.firstChild.href);	
-				document.querySelector(".active-list").style.display="none";
+				$(".active-list").style.display="none";
 			});
 		}
 	if(links.length > 0)
 	{
-		document.querySelector(".current-link").innerHTML = document.querySelector(".active-list > li > a").innerHTML ;//linkslist.firstChild.value; //set current-link to be the active list first child
+		$(".current-link").innerHTML = $(".active-list > li > a").innerHTML ;//linkslist.firstChild.value; //set current-link to be the active list first child
 	}
 
 }
 function setQuickActions(quickActions)
 {
-	var navsections = document.querySelectorAll(".nav-section");
+	var navsections = all(".nav-section");
 	for(var i=0;i<quickActions.length;i++)
 	{
 		//setting the label 
@@ -256,13 +263,13 @@ function setQuickActions(quickActions)
 		//setting the background 
 		navsections[i].style.background="url(./img/icons/" + quickActions[i].icon + ".png) center 80px no-repeat black";
 	}
-	var menucaptions = document.querySelectorAll(".menu-caption");	
+	var menucaptions = all(".menu-caption");	
 	for(var i=0;i<menucaptions.length;i++)
 	{
 		menucaptions[i].innerHTML = "<p> "+ quickActions[i].actionsLabel +"</p>";	
 	}
 	
-	var actionsList = document.querySelectorAll(".action-list");
+	var actionsList = all(".action-list");
 	for(var i=0;i<actionsList.length;i++)
 	{
 		var actions = quickActions[i].actions;	
@@ -281,7 +288,7 @@ function initiailize ()
 	activateTab("");
 	/* add event listener for setting icon */
 	document.getElementById("settings-icon").addEventListener("click",function(e){
-		var settingsForm = document.querySelector(".setting-form");
+		var settingsForm = $(".setting-form");
 		if(settingsForm.style.display == "block")
 		{
 			settingsForm.style.display = "none";
@@ -297,12 +304,12 @@ function initiailize ()
 	document.getElementById("cancel-botton").addEventListener("click",function(e){ Cancelbutton(); });
 	document.getElementById("save-botton").addEventListener("click",function(e){
 		 saveData();
-		 document.querySelector(".setting-form").action = document.querySelector(".active-tab .tab-link").hash;
+		 $(".setting-form").action = $(".active-tab .tab-link").hash;
 	});
-	document.querySelector(".current-link").addEventListener("click",function(e)
+	$(".current-link").addEventListener("click",function(e)
 	{
 		//show the other links
-		var list =document.querySelector(".active-list");
+		var list =$(".active-list");
 		if(list.style.display == "block")
 		{
 			list.style.display="none";
